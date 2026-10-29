@@ -1,1 +1,67 @@
-[]
+[
+{
+"id": "vohnJ2b3pHw5",
+"time": 1793287367,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 01 mark&amy hall\",\"name\":\"Test Couple 01 - Mark & Amy Hall\",\"picks\":[\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\",\"Life Groups\",\"Equipping Classes\"],\"ua\":\"v1\"}"
+},
+{
+"id": "k7T9Hn6HaiEb",
+"time": 1793287370,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 02 dan&kim ross\",\"name\":\"Test Couple 02 - Dan & Kim Ross\",\"picks\":[\"Youth Ministry\",\"Children's Ministry\",\"Life Groups\"],\"ua\":\"v1\"}"
+},
+{
+"id": "maHcbV4GYY9t",
+"time": 1793287374,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 03 tom&sue park\",\"name\":\"Test Couple 03 - Tom & Sue Park\",\"picks\":[\"Youth Ministry\",\"Life Groups\",\"Men's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "vYGJpndOA25I",
+"time": 1793287378,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 04 bill&jen cole\",\"name\":\"Test Couple 04 - Bill & Jen Cole\",\"picks\":[\"Local Outreach\",\"Global Missions\",\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\"],\"ua\":\"v1\"}"
+},
+{
+"id": "j3UxBhoHRAE6",
+"time": 1793287381,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 05 ray&liz webb\",\"name\":\"Test Couple 05 - Ray & Liz Webb\",\"picks\":[\"Global Missions\",\"Local Outreach\",\"Women's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "A38mRMSwU78t",
+"time": 1793287384,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 06 sam&ann ford\",\"name\":\"Test Couple 06 - Sam & Ann Ford\",\"picks\":[\"Children's Ministry\",\"Youth Ministry\",\"Women's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "OyocMFy8mlzH",
+"time": 1793287387,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 07 joe&meg lane\",\"name\":\"Test Couple 07 - Joe & Meg Lane\",\"picks\":[\"Counseling\",\"Seniors Ministry\",\"Life Groups\"],\"ua\":\"v1\"}"
+},
+{
+"id": "9qqEB3yZvH3n",
+"time": 1793287391,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 08 ken&pam dunn\",\"name\":\"Test Couple 08 - Ken & Pam Dunn\",\"picks\":[\"Seniors Ministry\",\"Counseling\",\"Equipping Classes\"],\"ua\":\"v1\"}"
+},
+{
+"id": "YS9D3mguaUT7",
+"time": 1793287394,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 09 rob&deb shaw\",\"name\":\"Test Couple 09 - Rob & Deb Shaw\",\"picks\":[\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\",\"Equipping Classes\",\"Counseling\"],\"ua\":\"v1\"}"
+},
+{
+"id": "UzigKUvy1M7Z",
+"time": 1793287397,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 10 ed&joy kemp\",\"name\":\"Test Couple 10 - Ed & Joy Kemp\",\"picks\":[\"Men's Ministry\",\"Women's Ministry\",\"Local Outreach\"],\"ua\":\"v1\"}"
+},
+{
+"id": "cjH0SVglt4lB",
+"time": 1793287401,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 02 dan&kim ross\",\"name\":\"test couple 02 - dan and kim ross\",\"picks\":[\"Children's Ministry\",\"Youth Ministry\",\"Women's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "niFI0aLbTwRB",
+"time": 1793287410,
+"message": "{\"type\":\"vote\",\"key\":\"test couple 11 al&bea moss\",\"name\":\"Test Couple 11 - Al & Bea Moss\",\"picks\":[\"Women's Ministry\",\"Men's Ministry\",\"Children's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "4cxzjoqvQo9v",
+"time": 1793287417,
+"message": "{\"type\":\"reset\"}"
+}
+]
