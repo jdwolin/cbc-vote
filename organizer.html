@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Organizer · CBC Ministry Groups</title>
+<link rel="stylesheet" href="style.css"></head>
+<body class="wide">
+<header><div class="kicker">Cypress Bible Church · Elder Retreat 2026</div><h1>Ministry Groups — Organizer</h1></header>
+<main>
+  <form class="card" id="pinCard" style="max-width:360px;margin:30px auto">
+    <label for="pin">Organizer PIN</label>
+    <input id="pin" inputmode="numeric" type="password" maxlength="8" autocomplete="off">
+    <div class="err" id="pinErr"></div>
+    <button type="submit">Open</button>
+  </form>
+  <div id="app" class="hidden">
+    <div class="card hide-proj">
+      <div class="count" id="count" style="margin:0 0 12px"></div>
+      <div class="row">
+        <button id="done">Done — make groups</button>
+        <button class="secondary" id="rerun" disabled>Re-run / shuffle ties</button>
+        <button class="secondary" id="proj">Projector view</button>
+      </div>
+    </div>
+    <div id="results" class="hidden">
+      <div class="summary" id="summary"></div>
+      <div class="groups" id="groups"></div>
+      <p class="muted" style="margin-top:14px">Badges show where the area was on each couple's ballot. Scoring: 1st = 3 pts, 2nd = 2, 3rd = 1. Groups are chosen to maximize the total.</p>
+    </div>
+    <div class="card hide-proj">
+      <h3 style="margin-top:0">Votes received</h3>
+      <div id="tally" class="muted" style="margin-bottom:10px"></div>
+      <div style="overflow-x:auto"><table><thead><tr><th>Couple</th><th>1st</th><th>2nd</th><th>3rd</th><th></th></tr></thead><tbody id="votes"></tbody></table></div>
+    </div>
+    <div class="card hide-proj">
+      <h3 style="margin-top:0">Reset</h3>
+      <p class="muted">Clears every vote so the count goes back to 0. Use this after testing or to start over.</p>
+      <button class="danger" id="reset">Reset all votes</button>
+      <p class="muted" style="margin-bottom:0">Voting link for the QR code: <a href="./">this page's folder</a></p>
+    </div>
+  </div>
+  <button class="secondary hidden" id="exitProj" style="position:fixed;right:12px;bottom:12px;width:auto;opacity:.7">Exit projector</button>
+</main>
+<script src="app.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const PIN_HASH = "2f1987bf98c09d2f5d2a23a6ae29fa53b9aec8f07ed1330bd439122f5a1a2c2c";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+async function sha(s) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
+async function unlock(pin) {
+  if (await sha(pin) !== PIN_HASH) { $("pinErr").textContent = "Wrong PIN"; return; }
+  sessionStorage.setItem("cbcPin", "1");
+  $("pinCard").classList.add("hidden"); $("app").classList.remove("hidden");
+  startLive(); render();
+}
+$("pinCard").addEventListener("submit", e => { e.preventDefault(); unlock($("pin").value.trim()); });
+if (sessionStorage.getItem("cbcPin")) { $("pinCard").classList.add("hidden"); $("app").classList.remove("hidden"); startLive(); }
+
+const RL = ["1st choice", "2nd choice", "3rd choice"], RC = ["r0", "r1", "r2"];
+let last = null;
+function render() {
+  const { votes } = Store.state();
+  const n = votes.length;
+  $("count").innerHTML = `<b>${n}</b> ${n === 1 ? "couple has" : "couples have"} voted` + (n >= 2 ? ` → ${Math.floor(n / 2)} group${Math.floor(n / 2) > 1 ? "s" : ""}${n % 2 ? " (one group of 3 couples)" : ""}` : "");
+  $("votes").innerHTML = votes.map(v => `<tr><td><b>${esc(v.name)}</b></td>${v.picks.map(p => `<td>${esc(SHORT(p))}</td>`).join("")}<td><button class="x" data-k="${esc(v.key)}" title="Remove this vote">✕</button></td></tr>`).join("") || `<tr><td colspan="5" class="muted">No votes yet.</td></tr>`;
+  const t = AREAS.map(a => [a, votes.filter(v => v.picks[0] === a).length, votes.filter(v => v.picks.includes(a)).length]).filter(x => x[2] > 0).sort((a, b) => b[1] - a[1] || b[2] - a[2]);
+  $("tally").innerHTML = t.length ? "1st-choice votes (any-rank in parentheses): " + t.map(x => `${esc(SHORT(x[0]))} <b>${x[1]}</b> (${x[2]})`).join(" · ") : "";
+}
+Store.listeners.push(render);
+$("votes").addEventListener("click", async e => {
+  const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+  const v = Store.state().votes.find(x => x.key === k);
+  if (!confirm(`Remove the vote from "${v ? v.name : k}"?`)) return;
+  try { await publish({ type: "delete", key: k }); } catch (err) { alert("Could not remove: " + err.message); }
+});
+function run() {
+  const { votes } = Store.state();
+  const r = makeGroups(votes, true);
+  if (r.error) { alert(r.error); return; }
+  last = r;
+  $("results").classList.remove("hidden"); $("rerun").disabled = false;
+  $("summary").innerHTML = `<b>${r.groups.length} groups</b> from ${r.n} couples · Satisfaction <b>${r.score}/${r.maxScore}</b> pts · ${r.firsts} got 1st choice, ${r.seconds} got 2nd, ${r.thirds} got 3rd${r.none ? `, <span style="color:#a33">${r.none} got none of their picks</span>` : ""}` + (r.ties > 1 ? ` <span class="muted">(${r.ties >= 50 ? "50+" : r.ties} equally good arrangements; Re-run shuffles among them)</span>` : "");
+  $("groups").innerHTML = r.groups.map(g => `<div class="group"><h3>${esc(SHORT(g.area))}${g.area !== SHORT(g.area) ? `<small>${esc(g.area.slice(SHORT(g.area).length).trim())}</small>` : ""}</h3><ul>${g.members.map(m => `<li><span>${esc(m.name)}</span><span class="badge ${m.rank >= 0 ? RC[m.rank] : "rn"}">${m.rank >= 0 ? RL[m.rank] : "not picked"}</span></li>`).join("")}</ul></div>`).join("");
+  try { localStorage.setItem("cbcLastGroups", JSON.stringify({ at: Date.now(), r })); } catch (e) {}
+  $("results").scrollIntoView({ behavior: "smooth" });
+}
+$("done").onclick = run; $("rerun").onclick = run;
+$("proj").onclick = () => { document.body.classList.add("projector"); $("exitProj").classList.remove("hidden"); if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); };
+$("exitProj").onclick = () => { document.body.classList.remove("projector"); $("exitProj").classList.add("hidden"); if (document.fullscreenElement) document.exitFullscreen(); };
+$("reset").onclick = async () => {
+  const n = Store.state().votes.length;
+  if (!confirm(`Reset ALL votes? This clears ${n} vote(s) and sets the count back to 0.`)) return;
+  try { await publish({ type: "reset" }); $("results").classList.add("hidden"); last = null; render(); alert("All votes cleared."); }
+  catch (e) { alert("Reset failed: " + e.message); }
+};
+</script>
+</body></html>

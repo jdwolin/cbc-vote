@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pick Your Ministry Area · CBC Elder Retreat</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<header><div class="kicker">Cypress Bible Church · Elder Retreat 2026</div><h1>Pick Your Ministry Area</h1></header>
+<main>
+  <div class="count" id="count">Loading…</div>
+  <form class="card" id="form" autocomplete="off">
+    <p class="muted" style="margin-top:0">One vote per couple. Rank your top 3 ministry areas. You'll be paired with another couple to discuss one area together.</p>
+    <label for="name">Your names as a couple</label>
+    <input id="name" placeholder="e.g. Jason &amp; Lisa Wolin" maxlength="80" required>
+    <label for="p0"><span class="num">1</span>First choice</label><select id="p0" required></select>
+    <label for="p1"><span class="num">2</span>Second choice</label><select id="p1" required></select>
+    <label for="p2"><span class="num">3</span>Third choice</label><select id="p2" required></select>
+    <div class="err" id="err"></div>
+    <button type="submit" id="submit">Submit our vote</button>
+    <p class="muted" style="text-align:center;margin-bottom:0">Changed your mind? Just submit again with the same names. Your new vote replaces the old one.</p>
+  </form>
+  <div class="card thanks hidden" id="thanks">
+    <div class="big">✓</div>
+    <h2 style="margin:4px 0">Thank you!</h2>
+    <div id="thanksName" class="muted"></div>
+    <div class="picks" id="thanksPicks"></div>
+    <button class="secondary" id="again">Change our vote</button>
+  </div>
+</main>
+<script src="app.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const sels = [$("p0"), $("p1"), $("p2")];
+function fill() {
+  const chosen = sels.map(s => s.value);
+  sels.forEach((s, i) => {
+    const cur = s.value;
+    s.innerHTML = '<option value="">Choose…</option>' + AREAS.map(a => {
+      const dis = chosen.includes(a) && chosen[i] !== a;
+      return `<option value="${a.replace(/"/g,'&quot;')}" ${dis ? "disabled" : ""} ${a === cur ? "selected" : ""}>${a}${dis ? " (picked)" : ""}</option>`;
+    }).join("");
+  });
+}
+fill(); sels.forEach(s => s.addEventListener("change", fill));
+try { const saved = JSON.parse(localStorage.getItem("cbcVote") || "null"); if (saved) { $("name").value = saved.name; saved.picks.forEach((p, i) => sels[i].value = p); fill(); } } catch (e) {}
+function render() {
+  const n = Store.state().votes.length;
+  $("count").innerHTML = `<b>${n}</b> ${n === 1 ? "couple has" : "couples have"} voted`;
+}
+Store.listeners.push(render);
+function showThanks(name, picks) {
+  $("form").classList.add("hidden"); $("thanks").classList.remove("hidden");
+  $("thanksName").textContent = name;
+  $("thanksPicks").innerHTML = picks.map((p, i) => `<div><span class="num" style="display:inline-block;background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-size:12px;margin-right:6px">${i + 1}</span>${p}</div>`).join("");
+}
+$("again").onclick = () => { $("thanks").classList.add("hidden"); $("form").classList.remove("hidden"); };
+$("form").addEventListener("submit", async ev => {
+  ev.preventDefault(); $("err").textContent = "";
+  const name = $("name").value.trim().replace(/\s+/g, " ");
+  const picks = sels.map(s => s.value);
+  if (name.length < 3) return $("err").textContent = "Please enter your names.";
+  if (picks.some(p => !p)) return $("err").textContent = "Please pick a 1st, 2nd and 3rd choice.";
+  if (new Set(picks).size !== 3) return $("err").textContent = "Your three choices must be different.";
+  $("submit").disabled = true; $("submit").textContent = "Submitting…";
+  try {
+    await publish({ type: "vote", key: normName(name), name, picks, ua: "v1" });
+    localStorage.setItem("cbcVote", JSON.stringify({ name, picks }));
+    showThanks(name, picks);
+  } catch (e) {
+    $("err").textContent = "Couldn't submit. Check your connection and try again.";
+  } finally { $("submit").disabled = false; $("submit").textContent = "Submit our vote"; }
+});
+startLive();
+</script>
+</body></html>
