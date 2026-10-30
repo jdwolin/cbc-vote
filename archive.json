@@ -63,5 +63,70 @@
 "id": "4cxzjoqvQo9v",
 "time": 1793287417,
 "message": "{\"type\":\"reset\"}"
+},
+{
+"id": "qf3sRWqoPTZX",
+"time": 1793325172,
+"message": "{\"type\":\"vote\",\"key\":\"pat&sonya stone\",\"name\":\"Pat and Sonya Stone\",\"picks\":[\"Youth Ministry\",\"Local Outreach\",\"Equipping Classes\"],\"ua\":\"v1\"}"
+},
+{
+"id": "Bdf2LWbn0MUS",
+"time": 1793325182,
+"message": "{\"type\":\"vote\",\"key\":\"jose&gail\",\"name\":\"Jose & Gail\",\"picks\":[\"Life Groups\",\"Equipping Classes\",\"Local Outreach\"],\"ua\":\"v1\"}"
+},
+{
+"id": "FmdXjGRxTdNZ",
+"time": 1793325183,
+"message": "{\"type\":\"vote\",\"key\":\"jason&wolin\",\"name\":\"Jason and Wolin\",\"picks\":[\"Women's Ministry\",\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\",\"Counseling\"],\"ua\":\"v1\"}"
+},
+{
+"id": "9oQySDGhrVCA",
+"time": 1793325185,
+"message": "{\"type\":\"vote\",\"key\":\"richard&michelle delaune\",\"name\":\"Richard and Michelle Delaune\",\"picks\":[\"Youth Ministry\",\"Life Groups\",\"Children's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "1zhMIefLsGLJ",
+"time": 1793325191,
+"message": "{\"type\":\"vote\",\"key\":\"mike&rowena mcginty\",\"name\":\"Mike & Rowena McGinty\",\"picks\":[\"Global Missions\",\"Life Groups\",\"Children's Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "KJwO013xc2u5",
+"time": 1793325201,
+"message": "{\"type\":\"vote\",\"key\":\"pat&sonya stone\",\"name\":\"Pat and Sonya Stone\",\"picks\":[\"Youth Ministry\",\"Local Outreach\",\"Equipping Classes\"],\"ua\":\"v1\"}"
+},
+{
+"id": "nvJ0LueDId77",
+"time": 1793325209,
+"message": "{\"type\":\"vote\",\"key\":\"tim&cathy\",\"name\":\"Tim and Cathy\",\"picks\":[\"Life Groups\",\"Women's Ministry\",\"Seniors Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "3nFCj9drO4Rb",
+"time": 1793325216,
+"message": "{\"type\":\"vote\",\"key\":\"russ&bonnie\",\"name\":\"Russ & Bonnie\",\"picks\":[\"Equipping Classes\",\"Women's Ministry\",\"Youth Ministry\"],\"ua\":\"v1\"}"
+},
+{
+"id": "Y5L51wy4Zur3",
+"time": 1793325227,
+"message": "{\"type\":\"vote\",\"key\":\"mark&marilyn cory\",\"name\":\"Mark & Marilyn Cory\",\"picks\":[\"Local Outreach\",\"Global Missions\",\"Equipping Classes\"],\"ua\":\"v1\"}"
+},
+{
+"id": "SOv2U8SEr3ny",
+"time": 1793325249,
+"message": "{\"type\":\"vote\",\"key\":\"jim&becky perry\",\"name\":\"Jim & Becky Perry\",\"picks\":[\"Women's Ministry\",\"Men's Ministry\",\"Local Outreach\"],\"ua\":\"v1\"}"
+},
+{
+"id": "1NsX1P9xvCjW",
+"time": 1793325250,
+"message": "{\"type\":\"vote\",\"key\":\"brian&liz\",\"name\":\"Brian and Liz\",\"picks\":[\"Life Groups\",\"Children's Ministry\",\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\"],\"ua\":\"v1\"}"
+},
+{
+"id": "NdUKp1Vnm2RI",
+"time": 1793325252,
+"message": "{\"type\":\"vote\",\"key\":\"john&uba perez\",\"name\":\"John and Uba Perez\",\"picks\":[\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\",\"Life Groups\",\"Local Outreach\"],\"ua\":\"v1\"}"
+},
+{
+"id": "fIIWNhQVbWwq",
+"time": 1793325285,
+"message": "{\"type\":\"vote\",\"key\":\"jim&shari archer\",\"name\":\"Jim and Shari Archer\",\"picks\":[\"Youth Ministry\",\"Worship in Services (Preaching, Singing, Ordinances, Prayer, Giving)\",\"Life Groups\"],\"ua\":\"v1\"}"
 }
 ]
